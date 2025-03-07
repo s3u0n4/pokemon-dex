@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
+import "../pokedex.css";
 
 const Pokedex = () => {
   const [pokemonData,setPokemonData] = useState([]);
@@ -19,7 +20,7 @@ const Pokedex = () => {
 
   const renderPokemonList = () =>{
     return pokemonData.map((pokemon)=> (
-      <div key = {pokemon.id}>
+      <div key = {pokemon.id} className='pokemon'>
         <img src = {pokemon.sprites.front_default} alt={pokemon.korean_name}/>
         <p>{pokemon.korean_name}</p>
         <p>ID: {pokemon.id}</p>
@@ -28,7 +29,7 @@ const Pokedex = () => {
   };
 
   return (
-    <div>
+    <div className='container'>
       {renderPokemonList()}
     </div>
   );
