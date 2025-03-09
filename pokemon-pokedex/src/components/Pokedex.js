@@ -1,36 +1,41 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import "../pokedex.css";
+
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5001"; // 환경 변수 또는 기본값
 
 const Pokedex = () => {
-  const [pokemonData,setPokemonData] = useState([]);
+  const [pokemonData, setPokemonData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    const fetchData = async ()=>{
-      const allPokemonData = [];
-      for (let i = 1; i<=151; i++){
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`);
-        const speciesResponse = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${i}`);
-        const koreanName = speciesResponse.data.names.find(name => name.language.name === 'ko');
-        allPokemonData.push({...response.data, korean_name:koreanName.name});
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/pokemon`); // API 호출
+        setPokemonData(response.data);
+      } catch (error) {
+        console.error("❌ Error fetching Pokémon data:", error);
+      } finally {
+        setLoading(false);
       }
-      setPokemonData(allPokemonData);
     };
     fetchData();
   }, []);
 
-  const renderPokemonList = () =>{
-    return pokemonData.map((pokemon)=> (
-      <div key = {pokemon.id} className='pokemon'>
-        <img src = {pokemon.sprites.front_default} alt={pokemon.korean_name}/>
-        <p>{pokemon.korean_name}</p>
-        <p>ID: {pokemon.id}</p>
-      </div>
-    ));
-  };
-
   return (
     <div className='container'>
-      {renderPokemonList()}
+      <h1>Pokédex</h1>
+      {loading ? <p>Loading...</p> : (
+        <div className="pokemon-list">
+          {pokemonData.map((pokemon) => (
+            <div key={pokemon.id} className='pokemon'>
+              <img src={pokemon.sprite} alt={pokemon.name} />
+              <p>{pokemon.name}</p>
+              <p>ID: {pokemon.id}</p>
+              <p>Type: {pokemon.type.join(", ")}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
