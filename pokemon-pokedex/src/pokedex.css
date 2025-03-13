@@ -1,15 +1,133 @@
-.container{
+/* ✅ 포켓몬 리스트 스타일 (가로 6개씩 정렬) */
+.container {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+  padding: 20px;
 }
 
-.pokemon{
+.pokemon-list {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 한 줄에 6개씩 */
+  gap: 15px; /* 카드 사이 간격 */
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* ✅ 포켓몬 카드 스타일 */
+.pokemon {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  justify-content: center;
+  width: 150px;
+  height: 200px;
+  padding: 15px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background: white;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.pokemon:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.pokemon img {
+  width: 100px;
+  height: 100px;
+}
+
+.pokemon p {
+  margin: 5px 0;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ✅ 반응형 디자인 (태블릿 4개, 모바일 2개씩 정렬) */
+@media (max-width: 1024px) {
+  .pokemon-list {
+    grid-template-columns: repeat(4, 1fr); /* 태블릿: 4개씩 정렬 */
+  }
+}
+
+@media (max-width: 768px) {
+  .pokemon-list {
+    grid-template-columns: repeat(2, 1fr); /* 모바일: 2개씩 정렬 */
+  }
+}
+
+/* ✅ 전체 페이지 스크롤 & 드래그 방지 (모달 열릴 때 적용) */
+body.modal-open {
+  overflow: hidden; /* ✅ 스크롤 방지 */
+  user-select: none; /* ✅ 드래그 방지 */
+  pointer-events: none; /* ✅ 클릭 및 상호작용 방지 */
+}
+
+/* ✅ 모달 오버레이 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none; /* ✅ 모달 내에서 드래그 방지 */
+  pointer-events: auto; /* ✅ 모달 내부는 상호작용 가능 */
+}
+
+/* ✅ 모달 창 스타일 */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  width: 350px;
+  position: relative;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-in-out;
+  user-select: none; /* ✅ 모달 내에서 드래그 방지 */
+  pointer-events: auto; /* ✅ 모달 내부는 상호작용 가능 */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ✅ 모달 닫기 버튼 */
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: #555;
+  user-select: none; /* ✅ 닫기 버튼도 드래그 방지 */
+}
+
+.close-button:hover {
+  color: red;
+}
+
+/* ✅ 모달 내부 이미지 스타일 */
+.modal-content img {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 10px;
+  user-select: none; /* ✅ 이미지도 드래그 방지 */
+}
+
+.modal-content h2,
+.modal-content p {
+  font-size: 16px;
+  color: #555;
+  margin: 5px 0;
+  user-select: none; /* ✅ 텍스트 드래그 방지 */
 }
