@@ -1,0 +1,43 @@
+/* styles/PokemonDetail.css */
+
+.pokemon-detail {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+.pokemon-detail-image {
+  width: 200px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.pokemon-info {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.pokemon-info th,
+.pokemon-info td {
+  border: 1px solid #ccc;
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+
+.type-badge {
+  display: inline-block;
+  margin-right: 5px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: white;
+  background-color: gray;
+}
+
+/* 타입별 색상 예시 */
+.type-grass { background-color: #78C850; }
+.type-poison { background-color: #A040A0; }
+.type-fire { background-color: #F08030; }
+.type-water { background-color: #6890F0; }
