@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/PokemonDetail.css";
 
@@ -26,6 +26,22 @@ const typeKoMap = {
 
 const getTypeKo = (type) => typeKoMap[type] || type;
 
+const parseEvolutionChain = (chain) => {
+  const evolutionArray = [];
+
+  let current = chain;
+  while (current) {
+    evolutionArray.push(current.species);
+    if (current.evolves_to.length > 0) {
+      current = current.evolves_to[0];
+    } else {
+      current = null;
+    }
+  }
+
+  return evolutionArray;
+};
+
 const PokemonDetail = () => {
   const { id } = useParams();
   const [pokemon, setPokemon] = useState(null);
@@ -39,7 +55,6 @@ const PokemonDetail = () => {
 
         const koreanName = species.data.names.find(n => n.language.name === "ko");
 
-        // 한글 특성명 추출
         const abilityKoreanNames = await Promise.all(
           res.data.abilities.map(async (a) => {
             const abilityDetail = await axios.get(a.ability.url);
@@ -60,6 +75,17 @@ const PokemonDetail = () => {
           waters_edge: "물가",
         };
 
+        const evolutionChain = await Promise.all(parseEvolutionChain(evolution.data.chain).map(async (species) => {
+          const speciesDetail = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${species.name}`);
+          const koreanNameEntry = speciesDetail.data.names.find(n => n.language.name === "ko");
+          const speciesRes = await axios.get(`https://pokeapi.co/api/v2/pokemon/${species.name}`);
+          return {
+            id: speciesRes.data.id,
+            name: koreanNameEntry ? koreanNameEntry.name : species.name,
+            image: speciesRes.data.sprites.front_default,
+          };
+        }));
+
         setPokemon({
           id: res.data.id,
           name: koreanName?.name || res.data.name,
@@ -67,7 +93,7 @@ const PokemonDetail = () => {
           types: res.data.types.map(t => t.type.name),
           abilities: abilityKoreanNames,
           habitat: habitatKoMap[habitatKo] || habitatKo,
-          evolutionChain: evolution.data,
+          evolutionChain,
           height: res.data.height / 10 + "m",
           weight: res.data.weight / 10 + "kg",
         });
@@ -115,6 +141,24 @@ const PokemonDetail = () => {
         </tr>
         </tbody>
       </table>
+
+      <h3>진화 트리</h3>
+      <div className="evolution-chain">
+        {pokemon.evolutionChain.map((species, idx) => (
+          <React.Fragment key={species.name}>
+            <Link to={`/pokemon/${species.id}`} className="evolution-item">
+              <img src={species.image} alt={species.name} />
+              <p>{species.name}</p>
+            </Link>
+            {idx < pokemon.evolutionChain.length - 1 && (
+              <span className="arrow">→</span>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+
+      <Link to="/" className="back-home">메인으로 돌아가기</Link>
+
     </div>
   );
 };
