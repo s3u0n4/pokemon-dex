@@ -146,13 +146,6 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.evolution-item:visited {
-  color: inherit; /* 방문한 후 색상 유지 */
-}
-
-.evolution-item:active {
-  color: inherit; /* 클릭 시 색상 유지 */
-}
 
 .evolution-item:hover {
   transform: translateY(-5px);
