@@ -1,0 +1,162 @@
+/* 기본 스타일 */
+body {
+  font-family: 'Pretendard', 'Arial', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* 검색 바 */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+  width: 300px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #ffcb05;
+}
+
+/* 포켓몬 그리드 */
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.pokemon-grid a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* 포켓몬 카드 */
+.pokemon-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.pokemon-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.pokemon-image {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.pokemon-id {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.pokemon-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 8px 0;
+  color: #333;
+}
+
+.pokemon-types {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* 타입 뱃지 공통 스타일 */
+.type-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: #fff;
+  text-transform: capitalize;
+}
+
+/* 포켓몬 타입 색상 */
+.type-normal { background-color: #A8A77A; }
+.type-fighting { background-color: #C22E28; }
+.type-flying { background-color: #A98FF3; }
+.type-poison { background-color: #A33EA1; }
+.type-ground { background-color: #E2BF65; }
+.type-rock { background-color: #B6A136; }
+.type-bug { background-color: #A6B91A; }
+.type-ghost { background-color: #735797; }
+.type-steel { background-color: #B7B7CE; }
+.type-fire { background-color: #EE8130; }
+.type-water { background-color: #6390F0; }
+.type-grass { background-color: #7AC74C; }
+.type-electric { background-color: #F7D02C; }
+.type-psychic { background-color: #F95587; }
+.type-ice { background-color: #96D9D6; }
+.type-dragon { background-color: #6F35FC; }
+.type-dark { background-color: #705746; }
+.type-fairy { background-color: #D685AD; }
+
+/* 로딩 텍스트 */
+.loading-text {
+  text-align: center;
+  padding: 30px 0;
+  color: #666;
+  font-size: 18px;
+}
+
+.inview-trigger {
+  height: 1px;
+}
+
+.top-button {
+  position: fixed;
+  bottom: 40px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border: 4px solid #333;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+  z-index: 1000;
+}
+
+.top-button:hover {
+  transform: translateY(-5px);
+}
+
+/* TOP 글자 중앙 정렬 */
+.top-button::before {
+  content: "TOP";
+  color: #333;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
